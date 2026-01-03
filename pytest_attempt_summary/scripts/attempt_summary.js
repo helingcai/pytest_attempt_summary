@@ -7,7 +7,14 @@ function show(id) {
 
 function togglePanel(id) {
     const panel = document.getElementById('panel-' + id);
-    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    const btn = document.getElementById('panel-btn-' + id);
+
+    // 切换面板显示
+    const isOpen = panel.style.display === 'block';
+    panel.style.display = isOpen ? 'none' : 'block';
+
+    // 切换按钮 active 类，用于箭头旋转
+    btn.classList.toggle('active', !isOpen);
 }
 
 /* 👇 页面加载完成后，自动展示最后一次失败的 Attempt */

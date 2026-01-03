@@ -1,5 +1,4 @@
 import pytest
-import allure
 
 from pytest_attempt_summary.attempt_summary import attach_attempt_summary
 
@@ -24,5 +23,4 @@ def pytest_runtest_makereport(item, call):
     if current_attempt != max_attempts:
         return
 
-    #allure report中attach的Attempt Summary html页面
     attach_attempt_summary(attempts)

@@ -1,5 +1,5 @@
 import allure
-from .attempt_view import render_attempt_chain, render_attempt_tabs
+from .attempt_view import  render_attempt_tabs,render_attempt_header
 from .retry_insight import build_retry_insight
 from .attempt_diff import calculate_attempt_diff
 from .utils.template_loader import load_template, load_js, load_css
@@ -14,7 +14,8 @@ def attach_attempt_summary(attempts: list[dict]):
     css = load_css("attempt_summary.css")
     tabs, cards = render_attempt_tabs(attempts)
 
-    attempt_chain = render_attempt_chain(attempts)
+    attempt_header=render_attempt_header(attempts)
+    # attempt_chain = render_attempt_chain(attempts)
     retry_insight = build_retry_insight(attempts)
     retry_insight_html = "<ul>" + "".join(
         f"<li>{line}</li>" for line in retry_insight
@@ -34,7 +35,8 @@ def attach_attempt_summary(attempts: list[dict]):
             .replace("{{cards}}", str(cards))
             .replace("{{attempt_diff}}", str(attempt_diff))
             .replace("{{last_failed}}", str(last_failed))
-            .replace("{{attempt_chain}}", str(attempt_chain))
+            .replace("{{attempt_header}}",attempt_header)
+            # .replace("{{attempt_chain}}", str(attempt_chain))
             .replace("{{retry_insight_html}}", str(retry_insight_html)))
     allure.attach(
         html,

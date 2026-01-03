@@ -1,7 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
-
 
 [project]
 name = "pytest-attempt-summary"
@@ -9,33 +8,34 @@ version = "0.1.0"
 description = "Enhanced Allure Attempt Summary for Playwright + Pytest"
 readme = "README.md"
 requires-python = ">=3.8"
-
-dependencies = [
-    "pytest>=7.0",
-    "allure-pytest>=2.13"
+license = { text = "MIT" }
+authors = [
+    { name = "Hongxia He", email = "hzz0214@outlook.com" }
 ]
-
 classifiers = [
     "Framework :: Pytest",
     "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "pytest>=7.0",
+    "allure-pytest>=2.13",
+    "playwright>=1.35"
 ]
 
+[project.urls]
+Homepage = "https://github.com/helingcai/pytest_attempt_summary"
+Repository = "https://github.com/helingcai/pytest_attempt_summary"
 
-# ⭐ pytest 插件注册（最关键）
-[project.entry-points.pytest11]
-attempt_summary = "pytest_attempt_summary.plugin"
-
-
-# ⭐ 包发现（等价于 find_packages()）
 [tool.setuptools.packages.find]
-where = ["."]
 include = ["pytest_attempt_summary*"]
 
-
-# ⭐ 非 Python 文件（等价于 package_data）
 [tool.setuptools.package-data]
 pytest_attempt_summary = [
     "templates/*.html",
     "styles/*.css",
     "scripts/*.js"
 ]
+
+[project.entry-points."pytest11"]
+attempt_summary = "pytest_attempt_summary.plugin"

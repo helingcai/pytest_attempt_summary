@@ -8,7 +8,7 @@ color: #333;}
   margin: 16px 0;
   padding: 12px 14px;
   border-left: 4px solid #f0ad4e;
-  background: #fff8e1;
+  background: #fcfaf4;
   border-radius: 6px;}
 .retry-insight h3 {
   margin: 0 0 6px;
@@ -65,12 +65,10 @@ margin: 0 4px;
 color: #999;
 }
 
-.attempt-chain.muted {
-background: none;
-border-left: none;
-color: #777;
-padding: 0;
-font-size: 13px;
+.attempt-header-meta {
+    margin: 6px 0 14px;
+    font-size: 14px;
+    color: #6b7280; /* neutral gray */
 }
 
 /* ===== Tabs ===== */
@@ -86,7 +84,8 @@ font-size: 13px;
   background-color: #d1d1d1;
 }*/
 .tab.active {
-  background-color: #00bcd4;
+  background-color: #80deea; /* 按下或选中颜色 */
+  transform: translateY(0);   /* 消除悬停上移效果 */
   color: black;}
 
 /* ===== Attempt Card ===== */
@@ -98,6 +97,7 @@ font-size: 13px;
   border: 1px solid #ddd;
   border-radius: 5px;}
 .card.active {
+  border-left:4px solid #e0f7fa;
   display: block;}
 .card-header {
   font-size: 18px;
@@ -126,7 +126,7 @@ font-size: 13px;
 /* Duration Style */
 .info-block.duration {
   background-color: #e0f7fa;  /* Light blue */
-  border-left: 4px solid #00bcd4;
+  /*border-left: 4px solid #00bcd4;*/
 }
 .info-block.duration span {
   font-weight: bold;
@@ -192,21 +192,37 @@ button {
   transition: background-color 0.3s;
 }
 button:hover {
-  background-color: #00BCED;
+  background-color: #b2ebf2; /* 鼠标悬停颜色稍深 */
+  transform: translateY(-1px); /* 轻微上移 */
 }
 
 /* ===== Failure Panel Button ===== */
 .panel-btn {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background: none;             /* 去掉实心背景 */
+  /* border: 1px solid #007bff;    蓝色边框 */
+  color: #007bff;               /* 蓝色文字 */
+   /*padding: 4px 10px; */
+  border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;                     /* chevron 和文字间距 */
+  transition: background-color 0.2s, color 0.2s;
 }
+ /*
 .panel-btn:hover {
-  background-color: #0056b3;
+  background-color: #e6f0ff;
+  color: #0056b3;} */
+
+.panel-btn .chevron {
+    /* font-weight: bold;*/
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+/* 可选：点击展开时旋转箭头 */
+.panel-btn.active .chevron {
+    transform: rotate(90deg);
 }
 /* Panel Style */
 .panel {
@@ -218,8 +234,8 @@ button:hover {
 .attempt-diff {
   margin: 16px 0;
   padding: 12px 14px;
-  background: #f5f7fa;
-  border-left: 4px solid #64b5f6;
+  background: #ffffff;
+  border-left: 4px solid #e0e0e0;
   border-radius: 6px;
   }
 .attempt-diff h3 {
@@ -301,8 +317,8 @@ button:hover {
 .failure-panel.retry-style {
   margin-top: 16px;
   padding: 14px 16px;
-  border-left: 4px solid #f44336;   /* ❌ failure 红 */
-  background-color: #fff5f5;       /* 柔和红底 */
+  /* border-left: 4px solid #efe9e9;   ❌ failure 红 */
+  background-color: #ffffff;
   border-radius: 6px;
 }
 

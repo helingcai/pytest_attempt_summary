@@ -2,4 +2,4 @@
 __pycache__/
 *.log
 .idea
-pytest_attempt_summary.egg-info/*
+pytest_attempt_summary.egg-info/*.*

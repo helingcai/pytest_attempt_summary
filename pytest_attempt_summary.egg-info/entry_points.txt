@@ -1,2 +1,0 @@
-[pytest11]
-attempt_summary = pytest_attempt_summary.plugin
