@@ -10,7 +10,7 @@ def calculate_attempt_diff(attempts: list[dict]) -> str:
     diff_blocks = []
 
     # Error differences
-    error_diff = compare_field(attempts, "error")
+    error_diff = compare_field(attempts, 'error')
     if error_diff:
         diff_blocks.append(
             render_diff_block(
