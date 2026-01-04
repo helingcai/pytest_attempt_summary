@@ -1,75 +1,27 @@
 # pytest-attempt-summary
 
-**Allure 报告增强版 Attempt Summary（Pytest + Playwright） 
-Enhanced Attempt Summary for Allure Reports (Pytest + Playwright)**
-
-`pytest-attempt-summary` 是一个 Pytest 插件，用于收集 **每个测试用例的多次执行（reruns）**，并在 Allure 报告中以清晰、可交互的 **Attempt Summary** 展示。  
-`pytest-attempt-summary` is a Pytest plugin that collects **multiple test attempts (reruns)** and presents them as a clear, interactive **Attempt Summary** in Allure Reports.
-
-适用于使用 **Pytest + Playwright + Allure** 的 **UI 自动化项目**。  
-It is designed for **UI automation projects** using **Pytest + Playwright + Allure**.
+| 中文 | English |
+|------|---------|
+| 让 pytest 的重试过程在 Allure 报告中 **看得见、讲得清、用得上** | Make pytest retries **visible, explainable, and actionable** in Allure reports. |
+| 当测试启用 reruns 后，失败往往变得难以理解。Allure 只展示最终结果，却隐藏了每一次 Attempt 之间真正发生了什么。 | When tests are retried, failures become harder to understand. Allure shows the final result — but hides what really happened between attempts. |
+| **pytest-attempt-summary** 为 Allure 报告添加 **Attempt Summary**，让重试行为变得清晰、结构化、可分析。 | **pytest-attempt-summary** adds an **Attempt Summary** section to Allure reports, making retry behavior clear, structured, and debuggable. |
 
 ---
 
-## 功能展示 / What You Get
+## 安装与快速开始 / Installation & Quick Start
 
-失败用例在 Allure 中会附带 **Attempt Summary**：  
-**Attempt Summary** attached to failed test cases in Allure:
+| 中文 | English |
+|------|---------|
+| 安装插件 | Install the plugin |
+| 启用重试（示例） | Enable retries (example) |
+| 运行测试并生成 Allure 报告 | Run tests and generate Allure report |
+| 在 Allure 中打开 **失败用例** → **Attempt Summary** 会自动显示在 **测试正文** 中 | Open a **failed test case** in Allure → **Attempt Summary** appears automatically in the **Test Body** |
 
-```
-
-🔁 Attempts: 3 / 3 failed
-
-Attempt 1 | Attempt 2 | Attempt 3 - Latest
-
-Attempt 3 ❌ FAILED
-🕑 Duration: 0.01s
-
-▼ View Failure Details
-├─ Page URL
-├─ Browser Console Errors
-├─ Test Failure Errors
-├─ Screenshot
-├─ Video (see Tear down)
-└─ Trace (see Tear down)
-
-````
-
----
-
-## 核心特性 / Key Features
-
-收集每个测试用例的 **所有重跑尝试** / Collects **all rerun attempts** per test case
-
-支持 `pytest-rerunfailures` / Supports `pytest-rerunfailures`
-
-可交互 **展开 / 收起失败详情** / Interactive **expand / collapse Failure Details**  
-
-高亮显示尝试之间的 **错误 / 耗时差异** / Highlights **error / duration differences** between attempts  
-
-集成 Playwright **视频**和 **trace** / Integrates with Playwright **video** and **trace**  
-
-轻量 HTML 附件（不会让 Allure 报告臃肿） / Lightweight HTML attachment (does not bloat Allure pages)  
-
----
-
-## 安装 / Installation
+**示例命令 / Example Commands:**
 
 ```bash
 pip install pytest-attempt-summary
 ````
-
-依赖 / Requirements：
-
-* `pytest >= 7.0`
-* `allure-pytest >= 2.13`
-
----
-
-## 基本用法 / Basic Usage
-
-在项目中启用 reruns（示例）：/
-Enable reruns in your project (example):
 
 ```ini
 # pytest.ini
@@ -77,42 +29,117 @@ Enable reruns in your project (example):
 reruns = 2
 ```
 
-运行测试并生成 Allure 报告：/
-Run tests with Allure:
-
 ```bash
 pytest --alluredir=allure-results
 allure serve allure-results
 ```
 
-在 Allure中打开 **失败用例** →**Attempt Summary** 会显示在Test Body中。/
-Open a **failed test case** in Allure →**Attempt Summary** will appear in the Test Body.
+---
 
+## 为什么 Attempt Summary 很重要 / Why Attempt Summary Matters
 
+| 中文                                                | English                                                                                                                                     |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 测试用例在重试后失败                                        | A test fails after retries                                                                                                                  |
+| 你只能看到失败而已                                         | That’s all you know                                                                                                                         |
+| 它每次都失败吗？错误在重试间是否变化？是不稳定用例还是确定性失败？截图、视频和 trace 在哪？ | Did it fail every time? Did the error change between retries? Was it flaky or deterministic? Where are the screenshots, videos, and traces? |
+
+**Without Attempt Summary / 没有 Attempt Summary:**
+
+```
+FAILED
+```
+
+**With pytest-attempt-summary / 使用 pytest-attempt-summary:**
+
+```
+🔁 Attempts: 3 / 3 failed
+
+🧠 Retry Insight
+• Flaky behavior detected (error changed between attempts)
+
+🔍 Attempt Diff Analysis
+≠ Error Differences
+≠ Duration Differences
+
+Attempt 3 ❌ FAILED
+🕑 Duration: 0.01s
+▶ View Failure Details
+```
+
+---
+
+| 中文                        | English                                                              |
+| ------------------------- | -------------------------------------------------------------------- |
+| 你可以立即看到                   | You instantly understand                                             |
+| ❗ 测试失败了多次                 | ❗ The test failed **multiple times**                                 |
+| 🔁 错误在重试间发生变化             | 🔁 Errors **changed between retries**                                |
+| 🧩 这很可能是不稳定用例             | 🧩 This is likely a **flaky test**                                   |
+| 🎯 明确下一步调查方向（截图、视频、trace） | 🎯 Exactly **where to investigate next** (screenshots, video, trace) |
+| 重试不会掩盖问题，它们让问题变得可理解       | Retries didn’t hide the problem. They explained it.                  |
+
+---
+
+## 核心一句话 / One-line Summary
+
+| 中文                                                | English                                                                                    |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Attempt Summary 帮助你理解 *为什么* 重试失败，而不仅仅是 *失败了*。** | **Attempt Summary helps you understand *why* retries fail — not just *that* they failed.** |
+
+---
+
+## 功能展示 / What You Get
+
+失败用例在 Allure 中会附带 **Attempt Summary**：
+
+```
+🔁 Attempts: 3 / 3 failed
+
+🧠 Retry Insight
+• Flaky behavior detected (error changed between attempts)
+
+🔍 Attempt Diff Analysis
+≠ Error Differences
+≠ Duration Differences
+
+Attempt 1 | Attempt 2 | Attempt 3 - Latest
+Attempt 3 ❌ FAILED
+🕑 Duration: 0.01s
+▼ View Failure Details (Attempt 3)
+├─ Page URL
+├─ Browser Console Errors
+├─ Test Failure Errors
+├─ Screenshot
+├─ Video (see Tear down)
+└─ Trace (see Tear down)
+```
+
+---
+
+## 核心特性 / Key Features
+
+| 中文                        | English                                                   |
+| ------------------------- | --------------------------------------------------------- |
+| 收集每个测试用例的所有重跑尝试           | Collects all rerun attempts per test case                 |
+| 支持 pytest-rerunfailures   | Supports pytest-rerunfailures                             |
+| 可交互展开 / 收起失败详情            | Interactive expand / collapse Failure Details             |
+| 高亮显示尝试之间的错误 / 耗时差异        | Highlights error / duration differences between attempts  |
+| 集成 Playwright 视频和 trace   | Integrates with Playwright video and trace                |
+| 轻量 HTML 附件，不让 Allure 报告臃肿 | Lightweight HTML attachment (does not bloat Allure pages) |
 
 ---
 
 ## 注意事项 / Important Notes
 
-🎥 视频和 🧭 Trace 文件由 UI 项目生成可在以下位置查看。 /
-🎥 **Video** and 🧭 **Trace** files are attached by your UI framework and are visible under.
-
-```
-Allure → Tear down → context
-```
-
-Attempt Summary **不直接嵌入视频或 trace**，它仅指引用户到哪里查看。/ 
-Attempt Summary **does not embed videos or traces**, it only guides you where to find them.
-
-本插件 **不会自动记录 attempt** 需要 UI 项目自己收集每次尝试的数据（状态、错误、耗时、附件）。/
-This plugin **does not record attempts by itself** your UI project must collect attempt data (status, error, duration, artifacts).
+| 中文                                                       | English                                                                                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 视频和 Trace 文件由 UI 项目生成，可在 Allure → Tear down → context 查看 | Video and Trace files are attached by your UI framework and are visible under Allure → Tear down → context                     |
+| Attempt Summary 不直接嵌入视频或 trace，仅指引用户到哪里查看                | Attempt Summary does not embed videos or traces, it only guides you where to find them                                         |
+| 插件不会自动记录 attempt，需要 UI 项目自己收集每次尝试的数据                     | This plugin does not record attempts by itself, your UI project must collect attempt data (status, error, duration, artifacts) |
 
 ---
 
 ## 预期 Attempt 数据格式 / Expected Attempt Data Format
-
-UI 自动化项目应提供类似的 attempt 数据：/
-Your UI automation framework should provide attempt data like:
 
 ```json
 [
@@ -137,14 +164,11 @@ Your UI automation framework should provide attempt data like:
 
 ## 适用场景 / Designed For
 
-Playwright + Pytest UI 自动化框架 / 
-Playwright + Pytest UI automation frameworks
-
-使用 reruns 分析不稳定用例的团队 / 
-Teams using reruns to analyze flaky tests
-
-关注 **重试洞察** 的工程师，而不仅仅是成功/失败 / 
-Engineers who want **retry insight**, not just pass/fail
+| 中文                           | English                                              |
+| ---------------------------- | ---------------------------------------------------- |
+| Playwright + Pytest UI 自动化框架 | Playwright + Pytest UI automation frameworks         |
+| 使用 reruns 分析不稳定用例的团队         | Teams using reruns to analyze flaky tests            |
+| 关注重试洞察的工程师，而不仅仅是成功/失败        | Engineers who want retry insight, not just pass/fail |
 
 ---
 
@@ -152,9 +176,3 @@ Engineers who want **retry insight**, not just pass/fail
 
 MIT License
 
----
-
-### 核心一句话 / One-line Summary
-
-**Attempt Summary 帮助你理解 *为什么* 重试失败，而不仅仅是 *失败了*。** / 
-**Attempt Summary helps you understand *why* retries fail, not just *that* they failed.**
