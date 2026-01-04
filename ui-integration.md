@@ -1,6 +1,7 @@
 # UI 项目接入指南 / UI Integration Guide
 
-> ⚠️ 本指南仅供 pytest-attempt-summary 插件接入使用。插件遵循 MIT License。
+> ⚠️ 本指南仅供 pytest-attempt-summary 插件接入使用。插件遵循 MIT License。  
+> ⚠️ This guide is only for integrating the pytest-attempt-summary plugin. The plugin follows the MIT License.
 
 本文档展示如何在 **UI 自动化项目**中集成 `pytest-attempt-summary` 插件。  
 This document shows how to integrate the `pytest-attempt-summary` plugin in a **UI automation project**.
@@ -10,7 +11,6 @@ This document shows how to integrate the `pytest-attempt-summary` plugin in a **
 ## 仓库结构示例 / Project Structure Example
 
 ```
-
 your-ui-project/
 ├── conftest.py                    # 核心接入模板 / Core integration template
 ├── pytest.ini                     # pytest 配置（reruns、markers） / pytest configuration
@@ -25,8 +25,8 @@ your-ui-project/
 
 ````
 
----
 
+---
 ## 安装依赖 / Install Dependencies
 
 ```bash
@@ -41,7 +41,7 @@ pytest-playwright
 pytest-rerunfailures
 playwright>=1.35
 allure-pytest>=2.13
-pytest-attempt-summary
+pytest-attempt-summary==0.1.2
 ```
 
 ---
@@ -56,8 +56,9 @@ addopts = --reruns 2 --alluredir=allure-results
 
 ## 完整 conftest.py 示例 / Full conftest.py Example
 
-> ✅ 这个示例包含 **context/page fixture**、失败收集、视频/trace 保存、以及 **attempts** 信息更新。
-> This example includes **context/page fixtures**, failure collection, video/trace saving, and **attempts** tracking.
+> ✅ 这个示例包含 context/page fixture、失败收集、视频/trace 保存、以及 attempts 信息更新。
+> 
+> ✅ This example includes context/page fixtures, failure collection, video/trace saving, and attempts tracking.
 
 ```python
 import time
@@ -227,20 +228,23 @@ def attach_artifacts_to_allure(target_dir):
 
 ## 使用步骤 / Usage Steps
 
-1. **在 UI 项目中放置 conftest.py / Place conftest.py in your UI project**
-2. **在测试用例中使用 `page` / `context` fixture / Use `page` / `context` fixtures in your tests**
-3. **运行 pytest 并生成 Allure Report / Run pytest and generate Allure Report**:
+| 中文                                      | English                                           |
+| --------------------------------------- | ------------------------------------------------- |
+| **在 UI 项目中放置 conftest.py**              | **Place conftest.py in your UI project**          |
+| **在测试用例中使用 `page` / `context` fixture** | **Use `page` / `context` fixtures in your tests** |
+| **运行 pytest 并生成 Allure Report**         | **Run pytest and generate Allure Report**         |
+
 
 ```bash
 pytest --alluredir=allure-results
 allure serve allure-results
 ```
 
-4. **查看 Attempt Summary / View Attempt Summary**：
-
-   * 显示每次 attempt 状态、耗时、错误信息 / Shows attempt status, duration, and errors
-   * 点击 **▶ View Failure Details** 展开 Failure Panel / Click **▶ View Failure Details** to expand panel
-   * 视频 / trace 文件实际存放在 `artifacts/<module>/<class>/<test>/attempt_x/` / Videos/traces are stored in `artifacts/<module>/<class>/<test>/attempt_x/`
+| 中文                                                                | English                                                                    |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **查看 Attempt Summary**：显示每次 attempt 状态、耗时、错误信息                    | **View Attempt Summary**: Shows attempt status, duration, and errors       |
+| 点击 **▶ View Failure Details** 展开 Failure Panel                    | Click **▶ View Failure Details** to expand panel                           |
+| 视频 / trace 文件实际存放在 `artifacts/<module>/<class>/<test>/attempt_x/` | Videos/traces are stored in `artifacts/<module>/<class>/<test>/attempt_x/` |
 
 ---
 
@@ -268,6 +272,7 @@ Attempt 2 ❌ FAILED
 🧭 Trace
 ```
 
-> ⚠️ 注意 / Note: 视频 / trace 文件在 **context fixture teardown** 阶段生成，Attempt Summary 仅用于指引用户查看 / video/trace files are generated at context teardown; Attempt Summary only guides where to view.
-
-```
+> ⚠️ 注意 / Note: 视频 / trace 文件在 context fixture teardown 阶段生成，Attempt Summary 仅用于指引用户查看
+> 
+> ⚠️ video/trace files are generated at context teardown; Attempt Summary only guides where to view.
+---
